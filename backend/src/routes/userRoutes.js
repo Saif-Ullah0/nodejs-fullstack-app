@@ -7,7 +7,8 @@ const {
   updateUserController,
   deleteUserController,
   loginUserController,
-  getUserByIdController
+  getUserByIdController,
+  createManyUsersController,
 } = require('../controllers/userController');
 
 router.get('/status', (req, res) => {
@@ -26,5 +27,6 @@ router.put('/:id', updateUserController);
 router.delete('/:id', deleteUserController);
 
 router.post('/login', loginUserController);
+router.post('/bulk', createManyUsersController);
 
 module.exports = router;
