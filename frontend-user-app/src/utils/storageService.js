@@ -13,14 +13,12 @@ export const getItem = (key) => {
   return null;
 };
 
-// Remove item from localStorage
 export const removeItem = (key) => {
   if (typeof window !== 'undefined') {
     localStorage.removeItem(key);
   }
 };
 
-// Clear all localStorage
 export const clearStorage = () => {
   if (typeof window !== 'undefined') {
     localStorage.clear();

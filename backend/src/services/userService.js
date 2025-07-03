@@ -27,19 +27,18 @@ const getUserByEmail = async (email) => {
   });
 };
 
-const updateUser = async (id, data) => {
+async function updateUser(id, data) {
   return await prisma.user.update({
-    where :{id:parseInt(id)},
+    where: { id: Number(id) },
     data,
   });
+}
 
-};
-
-const deleteUser = async (id) => {
+async function deleteUser(id) {
   return await prisma.user.delete({
     where: { id: parseInt(id) },
-  }); 
-};
+  });
+}
 async function createManyUsers(usersArray) {
   return await prisma.user.createMany({
     data: usersArray,

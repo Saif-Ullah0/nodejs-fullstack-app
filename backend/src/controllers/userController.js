@@ -71,30 +71,31 @@ async function getUserByIdController(req, res) {
 };
 
 const updateUserController = async (req, res) => {
-  try { 
-    const {_id, ...data}= req.body; 
-    console.log('Updating user ID:', req.params.id);
-    const updated = await updateUser(req.params.id, data);
+  try {
+    const { _id, ...safeUpdateData } = req.body;
+
+    const updated = await updateUser(req.params.id, safeUpdateData);
+
     if (!updated) {
       return res.status(404).json({ error: 'User not found' });
     }
-    res.status(200).json(updated);
+
+    res.json({ success: true, data: updated });
   } catch (error) {
-    console.error('Error updating user:', error.message);
     res.status(500).json({ error: 'Failed to update user' });
   }
 };
 
+
 async function deleteUserController(req, res) {
   try {
-    console.log('Deleting user with ID:', req.params.id);
     const result = await deleteUser(req.params.id);
     res.json({ success: true, message: result.message });
   } catch (error) {
-    console.error('Error deleting user:', error.message);
     res.status(500).json({ error: 'Failed to delete user' });
   }
-};
+}
+
 
 async function loginUserController(req, res) {
   try {

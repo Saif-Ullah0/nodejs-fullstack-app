@@ -26,7 +26,7 @@ export default function UsersPage() {
       });
 
       if (res.ok) {
-        setUsers(users.filter((u) => u._id !== userId));
+        setUsers(users.filter((u) => u.id !== userId));
       } else {
         alert('Failed to delete user');
       }
@@ -37,7 +37,7 @@ export default function UsersPage() {
   };
 
   const handleEdit = (user) => {
-    setEditUser(user._id);
+    setEditUser(user.id);
     setEditForm({ ...user });
   };
 
@@ -52,7 +52,7 @@ export default function UsersPage() {
       if (res.ok) {
         const updated = await res.json();
         setUsers((prev) =>
-          prev.map((u) => (u._id === updated.data._id ? updated.data : u))
+          prev.map((u) => (u.id === updated.data.id ? updated.data : u))
         );
         setEditUser(null);
       } else {
@@ -66,10 +66,14 @@ export default function UsersPage() {
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
       <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 shadow rounded-xl p-6">
-        <h2 className="text-3xl font-bold mb-6 text-indigo-700 dark:text-indigo-300">User Management</h2>
+        <h2 className="text-3xl font-bold mb-6 text-indigo-700 dark:text-indigo-300">
+          User Management
+        </h2>
 
         {error ? (
-          <p className="text-red-600 bg-red-100 dark:bg-red-900 p-3 rounded">{error}</p>
+          <p className="text-red-600 bg-red-100 dark:bg-red-900 p-3 rounded">
+            {error}
+          </p>
         ) : users.length === 0 ? (
           <p className="text-gray-600 dark:text-gray-300">No users found.</p>
         ) : (
@@ -89,12 +93,12 @@ export default function UsersPage() {
               <tbody>
                 {users.map((user, idx) => (
                   <tr
-                    key={user._id}
+                    key={user.id}
                     className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
                   >
                     <td className="p-3">{idx + 1}</td>
                     <td className="p-3">
-                      {editUser === user._id ? (
+                      {editUser === user.id ? (
                         <input
                           value={editForm.name}
                           onChange={(e) =>
@@ -111,7 +115,7 @@ export default function UsersPage() {
                     <td className="p-3">{user.age}</td>
                     <td className="p-3">{user.role}</td>
                     <td className="p-3 flex gap-2">
-                      {editUser === user._id ? (
+                      {editUser === user.id ? (
                         <>
                           <button
                             onClick={handleUpdate}
@@ -135,7 +139,7 @@ export default function UsersPage() {
                             Edit
                           </button>
                           <button
-                            onClick={() => handleDelete(user._id)}
+                            onClick={() => handleDelete(user.id)}
                             className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
                           >
                             Delete
